@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}LegacyLens — CodePilot{% endblock %}
+{% block content %}
+<h2>LegacyLens</h2>
+<p>Paste or upload old, messy code — get a clear explanation in Arabic & English.</p>
+
+<form method="POST" enctype="multipart/form-data" action="/tools/legacylens/analyze">
+    <textarea name="code" placeholder="Or paste your code here..."></textarea>
+    <div class="or">— or —</div>
+    <input type="file" name="file" accept=".py,.js,.ts,.php,.java">
+    <button type="submit">Analyze Code</button>
+</form>
+
+{% if explanation %}
+<div class="result">
+    <h3>AI Explanation:</h3>
+    <pre>{{ explanation }}</pre>
+    <button onclick="copyResult()">Copy</button>
+</div>
+{% endif %}
+
+<script>
+function copyResult() {
+    const text = document.querySelector('.result pre').innerText;
+    navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+}
+</script>
+{% endblock %}
